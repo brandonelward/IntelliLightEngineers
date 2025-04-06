@@ -1,0 +1,6 @@
+<edges>
+    <edge id="road1" from="A" to="T"/>
+    <edge id="road2" from="T" to="B"/>
+    <edge id="road3" from="B" to="T2"/>  <!-- Road to Second Traffic Light -->
+    <edge id="road4" from="T2" to="STOP"/>  <!-- Final road to stop point -->
+</edges>

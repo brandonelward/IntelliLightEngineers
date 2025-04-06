@@ -1,0 +1,21 @@
+<additional>
+    <!-- First Traffic Light Image as POI -->
+    <poi id="T_light" x="250" y="0" layer="100" imgFile="C:/Users/User/Sumo/light.png" width="50" height="50"/>
+
+    <!-- Second Traffic Light Image as POI -->
+    <poi id="T2_light" x="750" y="0" layer="100" imgFile="C:/Users/User/Sumo/light.png" width="50" height="50"/>
+
+    <!-- First Traffic Light Logic -->
+    <tlLogic id="T" type="static" programID="1" offset="0">
+        <phase duration="20" state="r"/>  <!-- Red for 20 seconds -->
+        <phase duration="3" state="y"/>   <!-- Yellow for 3 seconds -->
+        <phase duration="4" state="G"/>   <!-- Green for 4 seconds -->
+    </tlLogic>
+
+    <!-- Second Traffic Light Logic -->
+    <tlLogic id="T2" type="static" programID="1" offset="0">
+        <phase duration="20" state="r"/>  <!-- Red for 20 seconds -->
+        <phase duration="3" state="y"/>   <!-- Yellow for 3 seconds -->
+        <phase duration="4" state="G"/>   <!-- Green for 4 seconds -->
+    </tlLogic>
+</additional>

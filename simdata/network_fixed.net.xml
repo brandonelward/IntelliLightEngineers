@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-02-24 19:58:37 by Eclipse SUMO netconvert Version 1.22.0
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="nodes.nod.xml"/>
+        <edge-files value="edges.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="network_fixed.net.xml"/>
+    </output>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,1000.00,0.00" origBoundary="0.00,0.00,1000.00,0.00" projParameter="!"/>
+
+    <edge id=":B_0" function="internal">
+        <lane id=":B_0_0" index="0" speed="13.89" length="0.10" shape="500.00,-1.60 500.00,-1.60"/>
+    </edge>
+    <edge id=":T_0" function="internal">
+        <lane id=":T_0_0" index="0" speed="13.89" length="0.10" shape="250.00,-1.60 250.00,-1.60"/>
+    </edge>
+    <edge id=":T2_0" function="internal">
+        <lane id=":T2_0_0" index="0" speed="13.89" length="0.10" shape="750.00,-1.60 750.00,-1.60"/>
+    </edge>
+
+    <edge id="road1" from="A" to="T" priority="-1">
+        <lane id="road1_0" index="0" speed="13.89" length="250.00" shape="0.00,-1.60 250.00,-1.60"/>
+    </edge>
+    <edge id="road2" from="T" to="B" priority="-1">
+        <lane id="road2_0" index="0" speed="13.89" length="250.00" shape="250.00,-1.60 500.00,-1.60"/>
+    </edge>
+    <edge id="road3" from="B" to="T2" priority="-1">
+        <lane id="road3_0" index="0" speed="13.89" length="250.00" shape="500.00,-1.60 750.00,-1.60"/>
+    </edge>
+    <edge id="road4" from="T2" to="STOP" priority="-1">
+        <lane id="road4_0" index="0" speed="13.89" length="250.00" shape="750.00,-1.60 1000.00,-1.60"/>
+    </edge>
+
+    <tlLogic id="T" type="static" programID="0" offset="0">
+        <phase duration="82" state="G"/>
+        <phase duration="3"  state="y"/>
+        <phase duration="5"  state="r"/>
+    </tlLogic>
+    <tlLogic id="T2" type="static" programID="0" offset="0">
+        <phase duration="82" state="G"/>
+        <phase duration="3"  state="y"/>
+        <phase duration="5"  state="r"/>
+    </tlLogic>
+
+    <junction id="A" type="dead_end" x="0.00" y="0.00" incLanes="" intLanes="" shape="0.00,0.00 0.00,-3.20"/>
+    <junction id="B" type="priority" x="500.00" y="0.00" incLanes="road2_0" intLanes=":B_0_0" shape="500.00,0.00 500.00,-3.20 500.00,0.00">
+        <request index="0" response="0" foes="0" cont="0"/>
+    </junction>
+    <junction id="STOP" type="dead_end" x="1000.00" y="0.00" incLanes="road4_0" intLanes="" shape="1000.00,-3.20 1000.00,0.00"/>
+    <junction id="T" type="traffic_light" x="250.00" y="0.00" incLanes="road1_0" intLanes=":T_0_0" shape="250.00,0.00 250.00,-3.20 250.00,0.00">
+        <request index="0" response="0" foes="0" cont="0"/>
+    </junction>
+    <junction id="T2" type="traffic_light" x="750.00" y="0.00" incLanes="road3_0" intLanes=":T2_0_0" shape="750.00,0.00 750.00,-3.20 750.00,0.00">
+        <request index="0" response="0" foes="0" cont="0"/>
+    </junction>
+
+    <connection from="road1" to="road2" fromLane="0" toLane="0" via=":T_0_0" tl="T" linkIndex="0" dir="s" state="O"/>
+    <connection from="road2" to="road3" fromLane="0" toLane="0" via=":B_0_0" dir="s" state="M"/>
+    <connection from="road3" to="road4" fromLane="0" toLane="0" via=":T2_0_0" tl="T2" linkIndex="0" dir="s" state="O"/>
+
+    <connection from=":B_0" to="road3" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":T_0" to="road2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":T2_0" to="road4" fromLane="0" toLane="0" dir="s" state="M"/>
+
+</net>
