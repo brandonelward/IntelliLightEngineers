@@ -1,0 +1,5 @@
+<viewsettings>
+    <raster>
+        <layer id="traffic_light" imageFile="C:/Users/User/Sumo/light.png" scale="10.0"/>
+    </raster>
+</viewsettings>

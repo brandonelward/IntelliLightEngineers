@@ -1,0 +1,15 @@
+<configuration>
+    <input>
+        <net-file value="network_fixed.net.xml"/>
+        <route-files value="traffic.rou.xml"/>
+        <additional-files value="traffic_light.add.xml, custom_vehicle_shape.xml"/>
+        <gui-settings-file value="custom_view.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="200"/>
+    </time>
+    <report>
+        <collision-output value="collisions.xml"/>
+    </report>
+</configuration>

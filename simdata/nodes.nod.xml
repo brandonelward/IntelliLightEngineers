@@ -1,0 +1,7 @@
+<nodes>
+    <node id="A" x="0" y="0" type="priority"/>
+    <node id="T" x="250" y="0" type="traffic_light"/>  <!-- First Traffic Light -->
+    <node id="B" x="500" y="0" type="priority"/>
+    <node id="T2" x="750" y="0" type="traffic_light"/> <!-- Second Traffic Light -->
+    <node id="STOP" x="1000" y="0" type="priority"/>  <!-- Final stop point -->
+</nodes>

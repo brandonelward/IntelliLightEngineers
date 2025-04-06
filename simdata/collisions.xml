@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-04-06 16:06:14 by Eclipse SUMO sumo Version 1.22.0
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="simdata/network_fixed.net.xml"/>
+        <route-files value="simdata/traffic.rou.xml"/>
+        <additional-files value="simdata/traffic_light.add.xml,simdata/ custom_vehicle_shape.xml"/>
+    </input>
+
+    <output>
+        <collision-output value="simdata/collisions.xml"/>
+    </output>
+
+    <time>
+        <begin value="0"/>
+        <end value="200"/>
+    </time>
+
+    <traci_server>
+        <remote-port value="64251"/>
+    </traci_server>
+
+    <gui_only>
+        <gui-settings-file value="simdata/custom_view.xml"/>
+    </gui_only>
+
+</sumoConfiguration>
+-->
+
+<collisions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/collision_file.xsd">
+</collisions>
