@@ -1,9 +1,9 @@
 <additional>
     <!-- First Traffic Light Image as POI -->
-    <poi id="T_light" x="250" y="0" layer="100" imgFile="C:/Users/User/Sumo/light.png" width="50" height="50"/>
+    <poi id="T_light" x="250" y="0" layer="100" imgFile="light.png" width="50" height="50"/>
 
     <!-- Second Traffic Light Image as POI -->
-    <poi id="T2_light" x="750" y="0" layer="100" imgFile="C:/Users/User/Sumo/light.png" width="50" height="50"/>
+    <poi id="T2_light" x="750" y="0" layer="100" imgFile="light.png" width="50" height="50"/>
 
     <!-- First Traffic Light Logic -->
     <tlLogic id="T" type="static" programID="1" offset="0">

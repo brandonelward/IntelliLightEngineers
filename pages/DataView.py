@@ -1,22 +1,30 @@
 import streamlit as st
+import os
+import pandas as pd
 
-def DrawTrafFlowChart(trafFlowData):
-    # Traffic flow line chart    
+outputFolderPath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+"/output"
+possiblefiles = os.listdir(outputFolderPath)
+
+
+def DrawTrafFlowChart(filename):
+    # Traffic flow line chart
+    traf_flow_data = pd.read_csv(outputFolderPath+"/"+filename)["distance_traveled"]
+
     st.markdown("Traffic flow:")
     
-    st.line_chart(trafFlowData, x_label="Time period", y_label="Cars per period")
+    st.line_chart(traf_flow_data, x_label="Time period", y_label="Cars per period")
 
-def DrawCongestionBarChart(congData):
+def DrawCongestionBarChart(filename):
     # Congestion level bar chart
+    cong_data = pd.read_csv(outputFolderPath+"/"+filename)["speed"]
+
     st.markdown("Congestion Level:")
 
-    st.bar_chart(congData, x_label="Time period", y_label="Avg. Idling Minutes/vehicle")
+    st.bar_chart(cong_data, x_label="Time period", y_label="Avg. Idling Minutes/vehicle")
 
-if (st.session_state.simStatus == "Finished"):
-    traf_flow_data = st.session_state.simData["distance_traveled"]
-    DrawTrafFlowChart(traf_flow_data)
+fileSelector = st.selectbox("Which folder would you like to view: ", possiblefiles)
 
-    cong_data = st.session_state.simData["speed"]
-    DrawCongestionBarChart(cong_data)
+DrawTrafFlowChart(fileSelector)
+DrawCongestionBarChart(fileSelector)
 
 #Additional insights

@@ -4,9 +4,15 @@ import traci
 import pandas as pd
 import streamlit as st
 
-def runSimulation(simFile, outFile, stepCount, periods):
+def runSimulation(simFile, outFile, stepCount, gui):
 
     st.session_state.simStatus = "In Progress"
+
+    sumo_mode = ""
+    if gui:
+        sumo_mode="sumo-gui"
+    else:
+        sumo_mode="sumo"
 
     configure()
 
@@ -15,7 +21,10 @@ def runSimulation(simFile, outFile, stepCount, periods):
 
     if (".csv" not in outFile):
         outFile = outFile + ".csv"
-    
+    if ("output/" not in outFile):
+        outFile = "output/" + outFile
+
+
     data = {
         "step": [],
         "vehicle_id": [],
@@ -24,16 +33,17 @@ def runSimulation(simFile, outFile, stepCount, periods):
         "distance_traveled": [],
     }
 
-    traci.start(["sumo", "-c", simFile])
+    traci.start([sumo_mode, "-c", simFile])
 
-    st.write(f"step 0/{stepCount}.")
+    step=0
+
+    empty = st.empty()
 
     for step in range(stepCount):
         traci.simulationStep()
 
         #do data collection
-        stepUpdate = st.write(f"step {step+1}/{stepCount}.")
-
+        
         vehicle_ids = traci.vehicle.getIDList()
         for vehicle in vehicle_ids:
             speed = traci.vehicle.getSpeed(vehicle)
@@ -47,7 +57,11 @@ def runSimulation(simFile, outFile, stepCount, periods):
             data["acceleration"].append(acceleration)
             data["distance_traveled"].append(distance)
 
+        with empty:
+            st.write(f"step {step+1}/{stepCount}.")
+
     traci.close()
+    st.write("Simulation Complete!")
     
     df = pd.DataFrame(data)
     df.to_csv(outFile, index=False)
