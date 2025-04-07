@@ -12,7 +12,7 @@ def GetFilesInFolder(folderName):
             st.write(file)
 
 
-folderSelector = st.selectbox("Which folder would you like to view: ", ("Simdata", "Output"))
+folderSelector = st.selectbox("Which folder would you like to view: ", ("simdata", "Output"))
 
 
 
