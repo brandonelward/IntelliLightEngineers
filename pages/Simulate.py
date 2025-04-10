@@ -30,7 +30,7 @@ gui_toggle = st.checkbox("Simulation GUI")
 submit_button = st.button("Simulate!")
 
 if submit_button:
-    simFile = "simdata/" + sumo_config_entry
+    simFile = "generated/" + sumo_config_entry
     outFile = output_filename_entry
     dur = sim_duration_entry
     gui = gui_toggle

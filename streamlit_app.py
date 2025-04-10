@@ -20,6 +20,8 @@ simset = st.Page("pages/SimulationSetup.py")
 data = st.Page("pages/Dataview.py")
 files = st.Page("pages/Files.py")
 
+
+
 pages = [sim, data, files, simset]
 pg = st.navigation(pages=pages)
 pg.run()
