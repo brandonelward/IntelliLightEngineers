@@ -39,7 +39,9 @@ def WriteSimulationFile(simName, networkFile, duration):
 
 def GenerateRoutesFile(networkFile, duration, outName):
     routesPath = os.path.join(generatedFolder, outName+".trips.xml")
-    returnValue = os.system("C:/Program Files (x86)/Eclipse/Sumo/tools/randomTrips.py -n "+ str(networkFile) +" -e "+ str(duration) + " -r "+str(routesPath))
+    randomTripsPath = os.path.join(os.path.dirname(fp), r"tools/randomTrips.py")
+    inputNetFile = os.path.join(generatedFolder, networkFile)
+    returnValue = os.system("python " + randomTripsPath + " -n "+ str(inputNetFile) +" -e "+ str(duration) + " -r "+ str(routesPath))
     st.write("Return Value: " + str(returnValue))
     st.write("Routes file Generated! " + str(routesPath))
     return routesPath

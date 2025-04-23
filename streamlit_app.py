@@ -18,10 +18,10 @@ simdata = pd.DataFrame()
 sim = st.Page("pages/Simulate.py")
 simset = st.Page("pages/SimulationSetup.py")
 data = st.Page("pages/Dataview.py")
-files = st.Page("pages/Files.py")
+#files = st.Page("pages/Files.py")
 
 
 
-pages = [sim, data, files, simset]
+pages = [sim, data, simset]
 pg = st.navigation(pages=pages)
 pg.run()
