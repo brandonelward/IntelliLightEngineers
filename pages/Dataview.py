@@ -24,7 +24,8 @@ def DrawCongestionBarChart(filename):
 
 fileSelector = st.selectbox("Which folder would you like to view: ", possiblefiles)
 
-DrawTrafFlowChart(fileSelector)
-DrawCongestionBarChart(fileSelector)
+if fileSelector:
+    DrawTrafFlowChart(fileSelector)
+    DrawCongestionBarChart(fileSelector)
 
 #Additional insights

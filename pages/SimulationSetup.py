@@ -11,7 +11,7 @@ available_maps = os.listdir(generatedFolder)
 available_maps = [sumocnfg for sumocnfg in available_maps if sumocnfg.endswith(".net.xml")]
 map_select = st.selectbox(label="Simulation Map", options=available_maps)
 
-sim_duration_entry = st.number_input(label="Duration of simulation (timesteps)", min_value=10, max_value=99999, step=10)
+#sim_duration_entry = st.number_input(label="Duration of simulation (timesteps)", min_value=10, max_value=99999, step=10)
 
 def WriteSimulationFile(simName, networkFile, duration):
     routes = GenerateRoutesFile(networkFile, duration, simName)
@@ -49,5 +49,5 @@ def GenerateRoutesFile(networkFile, duration, outName):
 generateButton = st.button("Generate File")
 
 if generateButton:
-    WriteSimulationFile(simName=map_select.strip(".net.xml"), networkFile=map_select, duration=sim_duration_entry)
+    WriteSimulationFile(simName=map_select.strip(".net.xml"), networkFile=map_select, duration=10000)
 
