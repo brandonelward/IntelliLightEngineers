@@ -49,5 +49,6 @@ def GenerateRoutesFile(networkFile, duration, outName):
 generateButton = st.button("Generate File")
 
 if generateButton:
-    WriteSimulationFile(simName=map_select.strip(".net.xml"), networkFile=map_select, duration=10000)
+    with st.empty():
+        WriteSimulationFile(simName=map_select.strip(".net.xml"), networkFile=map_select, duration=10000)
 

@@ -1,0 +1,1 @@
+<configuration><input><net-file value="Cheltenham1.net.xml" /><route-files value="C:\Users\mathm\Github\IntelliLightEngineers\generated\Cheltenham1.trips.xml" /></input><time><begin value="0" /><end value="10000" /></time><report><collision-output value="collisions.xml" /></report></configuration>

@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 
-
+fp = os.path.dirname(__file__)
+pagesFolder = os.path.join(os.path.dirname(fp), r"pages")
 
 #session_state variable setup
 if "simdata" not in st.session_state:
@@ -10,18 +12,17 @@ if "simdata" not in st.session_state:
 
 if "simStatus" not in st.session_state:
     st.session_state.simStatus = "N/A"
-
-simdata = pd.DataFrame()
-
-
-#page navigation
-sim = st.Page("pages/Simulate.py", title="Simulate", icon="🔁")
-simset = st.Page("pages/SimulationSetup.py", title="Setup", icon="🧰")
-data = st.Page("pages/Dataview.py", title="Data", icon="📊")
-#files = st.Page("pages/Files.py")
-
+menu = st.Page(page=os.path.join(pagesFolder, r"menu.py"), title="Menu", icon="📃")
+def custom_pagelinks():
+    #print(os.path.join(pagesFolder, r"Simulate.py"))
+    sim = st.Page(page = os.path.join(pagesFolder, r"Simulate.py"), title="Simulate", icon="🔁")
+    simset = st.Page(page = os.path.join(pagesFolder, r"SimulationSetup.py"), title="Setup", icon="🧰")
+    data = st.Page(page = os.path.join(pagesFolder, r"Dataview.py"), title="Data", icon="📊")
+    help = st.Page(page=os.path.join(pagesFolder, r"help.py"), title="Help", icon="❓")
+    st.navigation(pages=[menu,simset,sim,data,help]).run()
 
 
-pages = [simset, sim, data]
-pg = st.navigation(pages=pages)
-pg.run()
+logo = st.sidebar.image(image="logo.jpg")
+custom_pagelinks()
+
+
