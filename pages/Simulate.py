@@ -22,7 +22,7 @@ sumo_config_entry = st.selectbox(label="Sumo Config Filename (.sumocfg)", option
 
 
 
-sim_duration_entry = st.number_input(label="Duration of simulation (max: 10000 timesteps)", min_value=10, max_value=10000, step=10)
+sim_duration_entry = st.number_input(label="Duration of simulation (max: 5000 timesteps)", min_value=10, max_value=5000, step=10)
 #sim_period_entry = st.number_input(label="Time Periods", min_value=2, max_value=50, step=1)
 output_filename_entry = st.text_input(label="Output data file name")
 gui_toggle = st.checkbox("Simulation GUI")
