@@ -23,8 +23,9 @@ def DrawCongestionBarChart(filename):
     st.bar_chart(cong_data, x_label="Time period", y_label="Avg. Idling Minutes/vehicle")
 
 fileSelector = st.selectbox("Which folder would you like to view: ", possiblefiles)
+generateButton = st.button("Generate Graphs")
 
-if fileSelector:
+if fileSelector and generateButton:
     DrawTrafFlowChart(fileSelector)
     DrawCongestionBarChart(fileSelector)
 
