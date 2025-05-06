@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-05-06 19:25:46.412052 by randomTrips.py v1_22_0+0002-63e50f52594
+<!-- generated on 2025-05-06 19:47:13.939926 by randomTrips.py v1_22_0+0002-63e50f52594
 <configuration>
-    <net-file value="C:\Github\IntelliLightEngineers\generated\CARLAcheltenham.net.xml"/>
-    <route-file value="C:\Github\IntelliLightEngineers\generated\CARLAsim.trips.xml"/>
+    <net-file value="C:\Github\IntelliLightEngineers\generated\Park+MontpellierDetailed.net.xml"/>
+    <route-file value="C:\Github\IntelliLightEngineers\generated\Park+MontpellierDetailed.trips.xml"/>
     <end value="5000.0"/>
 </configuration>
 -->

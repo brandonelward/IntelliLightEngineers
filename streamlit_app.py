@@ -22,5 +22,5 @@ def custom_pagelinks():
     st.navigation(pages=[menu,simset,sim,data,help]).run()
 
 
-logo = st.sidebar.image(image="logo.jpg", use_column_width="always", )
+logo = st.sidebar.image(image="logo.jpg", use_container_width=True)
 custom_pagelinks()
