@@ -1,1 +1,0 @@
-<configuration><input><net-file value="Cheltenhambasic.net.xml" /><route-files value="C:\Users\brand\Documents\GitHub\IntelliLightEngineers\generated\Cheltenhambasic.trips.xml" /></input><time><begin value="0" /><end value="10000" /></time><report><collision-output value="collisions.xml" /></report></configuration>

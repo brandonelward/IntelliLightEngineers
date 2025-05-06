@@ -6,10 +6,10 @@ pagesFolder = os.path.join(os.path.dirname(fp), r"pages")
 
 col1, col2, col3 = st.columns(3)
 def pageLinks():
-    setup = st.page_link(page=os.path.join(pagesFolder, r"SimulationSetup.py"), icon="🧰", use_container_width=True)
-    sim = st.page_link(page=os.path.join(pagesFolder, r"Simulate.py"), icon="🔁", use_container_width=True)
-    data = st.page_link(page=os.path.join(pagesFolder, r"Dataview.py"), icon="📊", use_container_width=True)
-    help = st.page_link(page=os.path.join(pagesFolder, r"help.py"), icon="❓", use_container_width=True)
+    st.page_link(page=os.path.join(pagesFolder, r"SimulationSetup.py"), icon="🧰", use_container_width=True)
+    st.page_link(page=os.path.join(pagesFolder, r"Simulate.py"), icon="🔁", use_container_width=True)
+    st.page_link(page=os.path.join(pagesFolder, r"Dataview.py"), icon="📊", use_container_width=True)
+    st.page_link(page=os.path.join(pagesFolder, r"help.py"), icon="❓", use_container_width=True)
 with col1:
     st.write(' ')
 with col3:

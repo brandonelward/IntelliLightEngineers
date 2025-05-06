@@ -3,10 +3,6 @@ import pandas as pd
 import numpy as np
 import os
 
-fp = os.path.dirname(__file__)
-pagesFolder = os.path.join(os.path.dirname(fp), r"pages")
-print(pagesFolder)
-
 #session_state variable setup
 if "simdata" not in st.session_state:
     st.session_state.simdata = pd.DataFrame()
@@ -14,8 +10,8 @@ if "simdata" not in st.session_state:
 if "simStatus" not in st.session_state:
     st.session_state.simStatus = "N/A"
 
-
-
+fp = os.path.dirname(__file__)
+pagesFolder = os.path.join(os.path.dirname(fp), r"pages")
 def custom_pagelinks():
     #print(os.path.join(pagesFolder, r"Simulate.py"))
     menu = st.Page(page= os.path.join(pagesFolder, r"menu.py"), title="Menu", icon="📃")
@@ -28,5 +24,3 @@ def custom_pagelinks():
 
 logo = st.sidebar.image(image="logo.jpg", use_column_width="always", )
 custom_pagelinks()
-
-
