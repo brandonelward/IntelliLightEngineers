@@ -98,4 +98,12 @@ def fetch_simulations_by_date_range(start_date, end_date):
 if __name__ == "__main__":
     create_database_and_table()
 
-    
+    csv_file = 'output/output.csv'
+    simulation_name = 'simulation_run_1'
+    save_simulation_data_to_db(csv_file, simulation_name)
+    all_simulations = fetch_all_simulations()
+    print("\nAll Simulations:", all_simulations)
+    if all_simulations:
+        data_for_simulation_1 = fetch_simulation_data(all_simulations[0])
+        print(f"\nData for '{all_simulations[0]}':")
+        print(data_for_simulation_1.head())
