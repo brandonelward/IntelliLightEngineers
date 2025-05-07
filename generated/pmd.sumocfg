@@ -1,0 +1,1 @@
+<configuration><input><net-file value="Park+MontpellierDetailed.net.xml" /><route-files value="C:\Users\mathm\Github\IntelliLightEngineers\generated\pmd.trips.xml" /></input><time><begin value="0" /><end value="5000" /></time><report><collision-output value="collisions.xml" /></report></configuration>

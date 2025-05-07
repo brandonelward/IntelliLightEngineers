@@ -4,6 +4,7 @@ import traci
 import pandas as pd
 import streamlit as st
 
+#Launches the SUMO system using user-defined parameters
 def runSimulation(simFile, outFile, stepCount, gui):
 
     st.session_state.simStatus = "In Progress"
@@ -31,6 +32,14 @@ def runSimulation(simFile, outFile, stepCount, gui):
         "speed": [],
         "acceleration": [],
         "distance_traveled": [],
+        "position_x": [],
+        "position_y": [],
+        "co2_emissions": [],
+        "noise_emissions": [],
+        "waiting_time": [],
+        "lane_id": [],
+        "emission_class": [],
+        "time_loss": []
     }
 
     traci.start([sumo_mode, "-c", simFile])
@@ -41,14 +50,19 @@ def runSimulation(simFile, outFile, stepCount, gui):
 
     for step in range(stepCount):
         traci.simulationStep()
-
-        #do data collection
         
         vehicle_ids = traci.vehicle.getIDList()
         for vehicle in vehicle_ids:
             speed = traci.vehicle.getSpeed(vehicle)
             acceleration = traci.vehicle.getAcceleration(vehicle)
             distance = traci.vehicle.getDistance(vehicle)
+            position = traci.vehicle.getPosition(vehicle)
+            co2 = traci.vehicle.getCO2Emission(vehicle)
+            noise = traci.vehicle.getNoiseEmission(vehicle)
+            wait = traci.vehicle.getWaitingTime(vehicle)
+            lane_id = traci.vehicle.getLaneID(vehicle)
+            emis_class = traci.vehicle.getEmissionClass(vehicle)
+            time_loss = traci.vehicle.getTimeLoss(vehicle)
 
             # Store data
             data["step"].append(step)
@@ -56,6 +70,14 @@ def runSimulation(simFile, outFile, stepCount, gui):
             data["speed"].append(speed)
             data["acceleration"].append(acceleration)
             data["distance_traveled"].append(distance)
+            data["position_x"].append(position[0])
+            data["position_y"].append(position[1])
+            data["co2_emissions"].append(co2)
+            data["noise_emissions"].append(noise)
+            data["waiting_time"].append(wait)
+            data["lane_id"].append(lane_id)
+            data["emission_class"].append(emis_class)
+            data["time_loss"].append(time_loss)
 
         with empty:
             st.write(f"step {step+1}/{stepCount}.")
@@ -70,9 +92,9 @@ def runSimulation(simFile, outFile, stepCount, gui):
 
     return df
 
+
+#Configures SUMO environment variables
 def configure():
     sumo_home = "C:\\Program Files (x86)\\Eclipse\\Sumo"
     os.environ["SUMO_HOME"] = sumo_home
-    tools = os.path.join(sumo_home, "tools")
-    sys.path.append(tools)
     return

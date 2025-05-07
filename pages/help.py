@@ -8,7 +8,7 @@ import streamlit as st
 st.title("Help Page")
 st.header("Project Overview", divider=True)
 st.markdown('''
-This dashboard is designed to be a user friendly wrapper for the Simulation of Urban MObility (SUMO) suite of tools. The user is able to generate a simulation scenario with a selection of pre-generated maps. Then, the user will simulate the scenario with customisable parameters. Graphs and visualisations will be used to demonstrate the data gathered from the simulation.
+This dashboard is designed to be a user friendly wrapper for the Simulation of Urban MObility (SUMO) suite of tools. The user is able to generate a simulation scenario with a selection of pre-selected maps. Then, the user will simulate the scenario with customisable parameters. Graphs and visualisations will be used to demonstrate the data gathered from the simulation.
 ''')
 st.header("Pages", divider=True)
 st.subheader("Setup")
