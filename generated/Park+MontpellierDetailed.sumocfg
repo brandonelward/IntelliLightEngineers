@@ -1,1 +1,0 @@
-<configuration><input><net-file value="Park+MontpellierDetailed.net.xml" /><route-files value="C:\Github\IntelliLightEngineers\generated\Park+MontpellierDetailed.trips.xml" /></input><time><begin value="0" /><end value="5000" /></time><report><collision-output value="collisions.xml" /></report></configuration>
