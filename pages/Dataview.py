@@ -11,62 +11,43 @@ fileSelector = st.selectbox("Which folder would you like to view: ", possiblefil
 
 def DrawDistanceGraph(df, vehicleID):
     with col1:
-        # Traffic flow line chart
-        distanceData = df["distance_traveled"]
-        data = distanceData.loc[df["vehicle_id"] == vehicleID]
-
+        distanceData = df.loc[df["vehicle_id"] == vehicleID, "distance_traveled"]
         st.markdown("Distance")
-        
-        st.line_chart(data, x_label="Time", y_label="Distance Travelled")
+        st.line_chart(distanceData, x_label="Simulation Step", y_label="Distance Travelled (meters)")
 
 def DrawNoiseBarGraph(df, vehicleID):
     with col1:
-        # Traffic flow line chart
-        distanceData = df["noise_emissions"]
-        data = distanceData.loc[df["vehicle_id"] == vehicleID]
-
+        noiseData = df.loc[df["vehicle_id"] == vehicleID, "noise_emissions"]
         st.markdown("Noise:")
-        
-        st.bar_chart(data, x_label="Time", y_label="Noise Emission (db)")
+        st.bar_chart(noiseData, x_label="Simulation Step", y_label="Noise Emission (dB)")
 
 def DrawCO2BarChart(df, vehicleID):
     with col2:
-        # Congestion level bar chart
-        co2Data = df["co2_emissions"]
-        data = co2Data.loc[df["vehicle_id"] == vehicleID]
-
+        co2Data = df.loc[df["vehicle_id"] == vehicleID, "co2_emissions"]
         st.markdown("CO2 Emission:")
-
-        st.bar_chart(data, x_label="Time", y_label="CO2 Emission (mg)")
+        st.bar_chart(co2Data, x_label="Simulation Step", y_label="CO2 Emission (mg)")
 
 def DrawWaitingTimeBarChart(df, vehicleID):
     with col2:
-        # Congestion level bar chart
-        co2Data = df["waiting_time"]
-        data = co2Data.loc[df["vehicle_id"] == vehicleID]
-
+        waitingTimeData = df.loc[df["vehicle_id"] == vehicleID, "waiting_time"]
         st.markdown("Waiting time:")
-
-        st.bar_chart(data, x_label="Simulation Time", y_label="Stationary Time (timesteps)")
+        st.bar_chart(waitingTimeData, x_label="Simulation Step", y_label="Waiting Time (seconds)")
 
 
 if fileSelector:
-    df = pd.read_csv(outputFolderPath+"/"+fileSelector)
-    uni = df['vehicle_id'].unique()
+    df = pd.read_csv(os.path.join(outputFolderPath, fileSelector))
+    uni_vehicle_ids = df['vehicle_id'].unique()
 
-    vehicleIdSelector = st.number_input(label = "Choose VehicleID to analyse", min_value=0, max_value=len(uni)-1)
+    vehicleIdSelector = st.selectbox("Choose VehicleID to analyse", uni_vehicle_ids)
     generateButton = st.button("Generate Graphs")
 
     if generateButton:
-        st.markdown("Analysing Vehicle " + str(vehicleIdSelector) + ":")
+        st.markdown(f"Analysing Vehicle {vehicleIdSelector}:")
         col1, col2 = st.columns(2)
-        DrawDistanceGraph(df, vehicleIdSelector)
-        DrawCO2BarChart(df, vehicleIdSelector)
-        DrawNoiseBarGraph(df, vehicleIdSelector)
-        DrawWaitingTimeBarChart(df, vehicleIdSelector)
-
-
-
-
-
-
+        if vehicleIdSelector in df['vehicle_id'].values:
+            DrawDistanceGraph(df, vehicleIdSelector)
+            DrawCO2BarChart(df, vehicleIdSelector)
+            DrawNoiseBarGraph(df, vehicleIdSelector)
+            DrawWaitingTimeBarChart(df, vehicleIdSelector)
+        else:
+            st.warning(f"Vehicle ID '{vehicleIdSelector}' not found in the selected data.")
