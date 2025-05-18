@@ -31,7 +31,16 @@ submit_button = st.button("Simulate!")
 
 if submit_button:
     simFile = "generated/" + sumo_config_entry
-    outFile = output_filename_entry
+
+    if len(output_filename_entry) <= 1:
+        #if no outputFileName, output won't be called " .csv"
+        split = sumo_config_entry.split(".")
+        print(split)
+        outFile = split[0]
+    else:
+        outFile = output_filename_entry
+
+    
     dur = sim_duration_entry
     gui = gui_toggle
 

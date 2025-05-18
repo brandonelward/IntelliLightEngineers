@@ -23,4 +23,5 @@ def custom_pagelinks():
 
 
 logo = st.sidebar.image(image="logo.jpg", use_container_width=True)
+gamexlogo = st.sidebar.image(image="GameX.png", use_container_width=True)
 custom_pagelinks()
