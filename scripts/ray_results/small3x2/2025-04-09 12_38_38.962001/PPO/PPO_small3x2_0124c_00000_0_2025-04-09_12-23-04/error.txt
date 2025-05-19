@@ -1,0 +1,29 @@
+Failure # 1 (occurred at 2025-04-09_12-23-19)
+The actor died because of an error raised in its creation task, [36mray::PPO.__init__()[39m (pid=6939, ip=10.0.2.15, actor_id=f22d59be776b8d095ab6dbe201000000, repr=PPO)
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/evaluation/worker_set.py", line 227, in _setup
+    self.add_workers(
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/evaluation/worker_set.py", line 593, in add_workers
+    raise result.get()
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/utils/actor_manager.py", line 481, in __fetch_result
+    result = ray.get(r)
+ray.exceptions.RayActorError: The actor died because of an error raised in its creation task, [36mray::RolloutWorker.__init__()[39m (pid=7036, ip=10.0.2.15, actor_id=e0ad36e8a61ff87c509f735e01000000, repr=<ray.rllib.evaluation.rollout_worker.RolloutWorker object at 0x782d4c9ddde0>)
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/evaluation/rollout_worker.py", line 397, in __init__
+    self.env = env_creator(copy.deepcopy(self.env_context))
+  File "/home/dylan/Desktop/SUMO-RL-GP/scripts/small_baseline.py", line 39, in <lambda>
+    lambda _: ParallelPettingZooEnv(env))
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/env/wrappers/pettingzoo_env.py", line 205, in __init__
+    assert all(
+AssertionError: Observation spaces for all agents must be identical. Perhaps SuperSuit's pad_observations wrapper can help (useage: `supersuit.aec_wrappers.pad_observations(env)`
+
+During handling of the above exception, another exception occurred:
+
+[36mray::PPO.__init__()[39m (pid=6939, ip=10.0.2.15, actor_id=f22d59be776b8d095ab6dbe201000000, repr=PPO)
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/algorithms/algorithm.py", line 517, in __init__
+    super().__init__(
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/tune/trainable/trainable.py", line 185, in __init__
+    self.setup(copy.deepcopy(self.config))
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/algorithms/algorithm.py", line 639, in setup
+    self.workers = WorkerSet(
+  File "/home/dylan/python_envs/sumorl/lib/python3.10/site-packages/ray/rllib/evaluation/worker_set.py", line 179, in __init__
+    raise e.args[0].args[2]
+AssertionError: Observation spaces for all agents must be identical. Perhaps SuperSuit's pad_observations wrapper can help (useage: `supersuit.aec_wrappers.pad_observations(env)`

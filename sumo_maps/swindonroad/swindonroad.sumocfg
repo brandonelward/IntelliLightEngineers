@@ -1,0 +1,6 @@
+<configuration>
+    <input>
+        <net-file value="swindonroad.net.xml"/>
+        <route-files value="swindonroad.rou.xml"/>
+    </input>
+</configuration>
