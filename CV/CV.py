@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 from ultralytics import YOLO
 
 
@@ -87,3 +88,43 @@ class Detect():
 
         cap.release()
         cv2.destroyAllWindows()
+
+    import numpy as np
+
+    def generate_detection_heatmap(self, video_path, output_path=r"heatmap.jpg"):
+        """
+        Generate a heatmap of detection areas from a video using the YOLO model.
+        Saves the heatmap as an image.
+        """
+        cap = cv2.VideoCapture(video_path)
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        heatmap = np.zeros((height, width), dtype=np.float32)
+
+        frame_count = 0
+        while cap.isOpened():
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            boxes = self.get_boxes(frame)
+
+            for x1, y1, x2, y2 in boxes:
+                heatmap[y1:y2, x1:x2] += 1
+
+            frame_count += 1
+
+        cap.release()
+
+        # Normalise heatmap to 0-255 and apply color map
+        normalized = cv2.normalize(heatmap, None, 0, 255, cv2.NORM_MINMAX)
+        colored = cv2.applyColorMap(normalized.astype(np.uint8), cv2.COLORMAP_JET)
+
+        cap = cv2.VideoCapture(video_path)
+        ret, background = cap.read()
+        cap.release()
+        blended = cv2.addWeighted(background, 0.5, colored, 0.5, 0)
+        cv2.imwrite(output_path, blended)
+
+        print(f"Heatmap saved to {output_path}")
