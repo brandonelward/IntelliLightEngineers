@@ -43,7 +43,8 @@ if submit_button:
     
     dur = sim_duration_entry
     gui = gui_toggle
+    sumohome = st.session_state.sumoHome
 
-    simdata = Simulation.runSimulation(simFile=simFile, outFile=outFile, stepCount=dur, gui=gui)
+    simdata = Simulation.runSimulation(simFile=simFile, outFile=outFile, stepCount=dur, gui=gui, sumoHome=sumohome)
 
     st.session_state.simdata = simdata

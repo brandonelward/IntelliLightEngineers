@@ -1,9 +1,6 @@
 import streamlit as st
 
-#overview
-#setup page
-#simulate page
-#dataview page
+
 
 st.title("Help Page")
 st.header("Project Overview", divider=True)
@@ -35,3 +32,14 @@ st.markdown('''
             
 This will show graphs that use data from the chosen file.
 ''')
+
+st.subheader("Settings", divider=True)
+sumoHomeInput = st.text_input(label="Enter Sumo Installation Location, Confirm with button below")
+confirm_button = st.button("Confirm")
+
+if confirm_button:
+    if sumoHomeInput == "":
+        print("Nothing in text entry")
+    else:
+        st.session_state.sumoHome = sumoHomeInput
+        print("Set sumoHome to " + str(st.session_state.sumoHome))

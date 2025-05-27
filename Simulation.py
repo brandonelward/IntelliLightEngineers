@@ -5,9 +5,11 @@ import pandas as pd
 import streamlit as st
 
 #Launches the SUMO system using user-defined parameters
-def runSimulation(simFile, outFile, stepCount, gui):
+def runSimulation(simFile, outFile, stepCount, gui, sumoHome):
 
     st.session_state.simStatus = "In Progress"
+
+    print("sumoHome = " + str(st.session_state.sumoHome))
 
     sumo_mode = ""
     if gui:
@@ -15,7 +17,7 @@ def runSimulation(simFile, outFile, stepCount, gui):
     else:
         sumo_mode="sumo"
 
-    configure()
+    configure(sumoHome)
 
     if (".sumocfg" not in simFile):
         simFile = simFile + ".sumocfg"
@@ -94,7 +96,8 @@ def runSimulation(simFile, outFile, stepCount, gui):
 
 
 #Configures SUMO environment variables
-def configure():
-    sumo_home = "C:\\Program Files (x86)\\Eclipse\\Sumo"
+def configure(sumoHome):
+    sumo_home = sumoHome.replace("/", "//")
+
     os.environ["SUMO_HOME"] = sumo_home
     return

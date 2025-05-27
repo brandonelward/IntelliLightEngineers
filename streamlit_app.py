@@ -10,6 +10,9 @@ if "simdata" not in st.session_state:
 if "simStatus" not in st.session_state:
     st.session_state.simStatus = "N/A"
 
+if "sumoHome" not in st.session_state:
+    st.session_state.sumoHome = "C:\Program Files (x86)\Eclipse\Sumo"
+
 fp = os.path.dirname(__file__)
 pagesFolder = os.path.join(os.path.dirname(fp), r"pages")
 #Sets up the sidebar navigation
@@ -24,4 +27,5 @@ def custom_pagelinks():
 
 logo = st.sidebar.image(image="logo.jpg", use_container_width=True)
 gamexlogo = st.sidebar.image(image="GameX.png", use_container_width=True)
+
 custom_pagelinks()
