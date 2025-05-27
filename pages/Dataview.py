@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import plotly.express as px
+from CV import CV
 
 #https://stackoverflow.com/questions/17071871/how-do-i-select-rows-from-a-dataframe-based-on-column-values
 
@@ -115,3 +116,15 @@ if fileSelector:
         DrawComparisonChart(df, selected_vehicle_ids, "noise_emissions", "Noise Emission Comparison", "Noise Emission (dB)")
         DrawComparisonChart(df, selected_vehicle_ids, "waiting_time", "Waiting Time Comparison", "Waiting Time (seconds)")
         DrawComparisonChart(df, selected_vehicle_ids, "distance_traveled", "Distance Travelled Comparison", "Distance Travelled (meters)")
+
+
+    #Add Heatmaps
+    st.header("Heatmaps")
+    heatmapButton = st.button("Generate Heatmap")
+    heatmapPath = "heatmap.png"
+    vidPath=""
+    detect = CV.Detect()
+
+    if heatmapButton:
+        detect.generate_detection_heatmap_from_images(image_dir="images/",output_path=heatmapPath)
+        heatmapImage = st.image(heatmapPath)

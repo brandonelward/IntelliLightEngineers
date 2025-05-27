@@ -1,8 +1,9 @@
 import os
-import sys
+import shutil
 import traci
 import pandas as pd
 import streamlit as st
+import pyautogui
 
 #Launches the SUMO system using user-defined parameters
 def runSimulation(simFile, outFile, stepCount, gui, sumoHome):
@@ -50,6 +51,14 @@ def runSimulation(simFile, outFile, stepCount, gui, sumoHome):
 
     empty = st.empty()
 
+    if gui:
+        #Clean the images directory
+        folder = "images/"
+        for filename in os.listdir(folder):
+            file_path = os.path.join(folder, filename)
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+
     for step in range(stepCount):
         traci.simulationStep()
         
@@ -81,6 +90,10 @@ def runSimulation(simFile, outFile, stepCount, gui, sumoHome):
             data["emission_class"].append(emis_class)
             data["time_loss"].append(time_loss)
 
+        if gui: #Assume that if the gui is running, generate a heatmap
+            takeScreenshot(imagesFolder="images/", step=step)
+
+
         with empty:
             st.write(f"step {step+1}/{stepCount}.")
 
@@ -94,6 +107,15 @@ def runSimulation(simFile, outFile, stepCount, gui, sumoHome):
 
     return df
 
+
+def takeScreenshot(imagesFolder, step):
+    filename = os.path.join(imagesFolder, f"screenshot_{step:04}.png")
+    print(f"Taking screenshot {step}...")
+
+    screenshot = pyautogui.screenshot()
+    screenshot.save(filename)
+
+    print(f"Saved: {filename}")
 
 #Configures SUMO environment variables
 def configure(sumoHome):
