@@ -126,5 +126,11 @@ if fileSelector:
     detect = CV.Detect()
 
     if heatmapButton:
-        detect.generate_detection_heatmap_from_images(image_dir="images/",output_path=heatmapPath)
-        heatmapImage = st.image(heatmapPath)
+        if len(os.listdir("images/")) <= 0:
+            with st.empty():
+                st.write("No images were taken, you should enable heatmap generation in Simulate")
+        else:
+            with st.empty():
+                st.write("Generating Heatmap")
+                detect.generate_detection_heatmap_from_images(image_dir="images/",output_path=heatmapPath)
+                heatmapImage = st.image(heatmapPath)

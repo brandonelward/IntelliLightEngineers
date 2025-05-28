@@ -6,8 +6,7 @@ import os
 
 
 class Detect():
-=======
-    def __init__(self, model_path=r"cv_model"):
+    def __init__(self, model_path=(os.getcwd() + "\CV\cv_model.pt")):
         """
         Initialize YOLO detector with a given model path.
         """
