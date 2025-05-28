@@ -6,11 +6,11 @@ import os
 
 
 class Detect():
-    def __init__(self, model_path=(os.getcwd() + "\CV\cv_model.pt")):
+=======
+    def __init__(self, model_path=r"cv_model"):
         """
         Initialize YOLO detector with a given model path.
         """
-        #print("path = " + str(os.getcwd() + "\CV\cv_model.pt"))
         self.model = YOLO(model_path)
 
     def get_boxes(self, image):
