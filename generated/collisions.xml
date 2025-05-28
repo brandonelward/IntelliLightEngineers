@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-05-01 14:45:33 by Eclipse SUMO GUI Version 1.22.0
+<!-- generated on 2025-05-27 17:38:55 by Eclipse SUMO GUI Version 1.22.0
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="generated/Cheltenhambasic.net.xml"/>
-        <route-files value="C:\Users\mathm\Github\IntelliLightEngineers\generated\Cheltenhambasic.trips.xml"/>
+        <net-file value="generated/swindonroad.net.xml"/>
+        <route-files value="C:\Github\IntelliLightEngineers\generated\swindonroad.trips.xml"/>
     </input>
 
     <output>
@@ -14,11 +14,11 @@
 
     <time>
         <begin value="0"/>
-        <end value="10000"/>
+        <end value="5000"/>
     </time>
 
     <traci_server>
-        <remote-port value="52429"/>
+        <remote-port value="51166"/>
     </traci_server>
 
 </sumoConfiguration>

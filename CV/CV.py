@@ -1,9 +1,12 @@
 import cv2
 import numpy as np
 from ultralytics import YOLO
+from glob import glob
+import os
 
 
 class Detect():
+=======
     def __init__(self, model_path=r"cv_model"):
         """
         Initialize YOLO detector with a given model path.
@@ -89,9 +92,8 @@ class Detect():
         cap.release()
         cv2.destroyAllWindows()
 
-    import numpy as np
 
-    def generate_detection_heatmap(self, video_path, output_path=r"heatmap.jpg"):
+    def generate_detection_heatmap_from_video(self, video_path, output_path=r"heatmap.png"):
         """
         Generate a heatmap of detection areas from a video using the YOLO model.
         Saves the heatmap as an image.
@@ -127,4 +129,47 @@ class Detect():
         blended = cv2.addWeighted(background, 0.5, colored, 0.5, 0)
         cv2.imwrite(output_path, blended)
 
+        print(f"Heatmap saved to {output_path}")
+
+    def generate_detection_heatmap_from_images(self, image_dir, output_path="heatmap.png"):
+        """
+        Generate a heatmap of detection areas from a directory of images using the YOLO model.
+        Saves the heatmap as an image.
+        """
+        # Collect all image file paths (adjust extensions as needed)
+        image_paths = sorted(glob(os.path.join(image_dir, "*.png")) + 
+                            glob(os.path.join(image_dir, "*.jpg")) + 
+                            glob(os.path.join(image_dir, "*.jpeg")))
+
+        if not image_paths:
+            raise ValueError(f"No image files found in directory: {image_dir}")
+
+        # Read first image to get dimensions
+        sample_image = cv2.imread(image_paths[0])
+        if sample_image is None:
+            raise ValueError(f"Could not read image: {image_paths[0]}")
+
+        height, width = sample_image.shape[:2]
+        heatmap = np.zeros((height, width), dtype=np.float32)
+
+        for img_path in image_paths:
+            image = cv2.imread(img_path)
+            if image is None:
+                print(f"Warning: Could not read image {img_path}. Skipping.")
+                continue
+
+            boxes = self.get_boxes(image)
+
+            for x1, y1, x2, y2 in boxes:
+                heatmap[y1:y2, x1:x2] += 1
+
+        # Normalise heatmap to 0-255 and apply colormap
+        normalized = cv2.normalize(heatmap, None, 0, 255, cv2.NORM_MINMAX)
+        colored = cv2.applyColorMap(normalized.astype(np.uint8), cv2.COLORMAP_JET)
+
+        # Use the first image as background for blending
+        background = sample_image
+        blended = cv2.addWeighted(background, 0.5, colored, 0.5, 0)
+
+        cv2.imwrite(output_path, blended)
         print(f"Heatmap saved to {output_path}")
