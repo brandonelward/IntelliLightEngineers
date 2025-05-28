@@ -2,13 +2,13 @@ import streamlit as st
 import os
 import pandas as pd
 import plotly.express as px
+from database import create_database
 
 #https://stackoverflow.com/questions/17071871/how-do-i-select-rows-from-a-dataframe-based-on-column-values
 
 outputFolderPath = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+"/output"
 possiblefiles = os.listdir(outputFolderPath)
 
-fileSelector = st.selectbox("Which file would you like to view: ", possiblefiles)
 
 def load_data(filename):
     df = pd.read_csv(os.path.join(outputFolderPath, filename))
@@ -46,8 +46,37 @@ def DrawComparisonChart(df, vehicle_ids, column, title, y_label):
         chart_data[f"Vehicle {vid}"] = data[column]
     st.line_chart(chart_data, y_label=y_label)
 
-if fileSelector:
-    df = load_data(fileSelector)
+
+
+st.title("Traffic Simulation Data Viewer")
+
+# Choose data source (CSV or Database)
+st.header("Select Simulation Data Source")
+data_source_option = st.radio("Load data from:", ("CSV File", "Database"))
+
+df = None # Initialise df to None
+
+if data_source_option == "CSV File":
+    fileSelector = st.selectbox("Choose a CSV file to view:", possiblefiles)
+    if fileSelector:
+        try:
+            df = pd.read_csv(os.path.join(outputFolderPath, fileSelector))
+        except FileNotFoundError:
+            st.error(f"Error: CSV file '{fileSelector}' not found.")
+        except Exception as e:
+            st.error(f"Error reading CSV file: {e}")
+elif data_source_option == "Database":
+    available_db_tables = create_database.get_all_simulation_table_names()
+    if available_db_tables:
+        table_selector = st.selectbox("Choose a database simulation to view:", available_db_tables)
+        if table_selector:
+            df = create_database.fetch_simulation_data_from_table(table_selector)
+    else:
+        st.info("No simulation data tables found in the database. Run simulations first!")
+
+
+# --- Render visualizations only if a DataFrame is loaded ---
+if df is not None and not df.empty:
     unique_vehicle_ids = df['vehicle_id'].unique()
 
     # 1. General Simulation Insights
@@ -64,14 +93,14 @@ if fileSelector:
                 fig_emission = px.pie(emission_counts, names=emission_counts.index, values=emission_counts.values, title='Emission Class Breakdown')
                 st.plotly_chart(fig_emission)
             else:
-                st.info("Emission class data not available.")
+                st.info("Emission class data not available in this simulation.")
 
             if 'waiting_time' in df.columns and 'step' in df.columns:
                 st.subheader("Average Waiting Time Over Time")
                 avg_wait_time = df.groupby('step')['waiting_time'].mean()
                 st.line_chart(avg_wait_time, y_label="Average Waiting Time (seconds)")
             else:
-                st.info("Waiting time data not available.")
+                st.info("Waiting time data not available in this simulation.")
 
         with col_gen2:
             if 'co2_emissions' in df.columns and 'step' in df.columns:
@@ -79,19 +108,21 @@ if fileSelector:
                 avg_co2 = df.groupby('step')['co2_emissions'].mean()
                 st.line_chart(avg_co2, y_label="Average CO2 Emissions (mg)")
             else:
-                st.info("CO2 emissions data not available.")
+                st.info("CO2 emissions data not available in this simulation.")
 
             if 'time_loss' in df.columns:
-                st.subheader("Total Time Loss")
+                st.subheader("Time Loss Analysis")
                 total_time_loss = df['time_loss'].sum()
+                median_time_loss = df['time_loss'].median()
                 st.metric("Total Time Loss (Total for all vehicles)", f"{total_time_loss:.2f} seconds")
+                st.metric("Median Time Loss (Typical vehicle)", f"{median_time_loss:.2f} seconds")
             else:
-                st.info("Time loss data not available.")
+                st.info("Time loss data not available in this simulation.")
 
     # 2. Single Vehicle Analysis
     st.header("Single Vehicle Analysis")
-    single_vehicle_id = st.selectbox("Choose a VehicleID to analyse:", unique_vehicle_ids)
-    generate_single_button = st.button("Generate Single Vehicle Graphs")
+    single_vehicle_id = st.selectbox("Choose a VehicleID to analyse:", unique_vehicle_ids, key="single_veh_select")
+    generate_single_button = st.button("Generate Single Vehicle Graphs", key="gen_single_btn") 
 
     if generate_single_button:
         st.markdown(f"### Analysing Vehicle {single_vehicle_id}:")
@@ -106,7 +137,7 @@ if fileSelector:
 
     # 3. Compare Multiple Vehicles
     st.header("Compare Multiple Vehicles")
-    selected_vehicle_ids = st.multiselect("Choose VehicleIDs to compare:", unique_vehicle_ids)
+    selected_vehicle_ids = st.multiselect("Choose VehicleIDs to compare:", unique_vehicle_ids, key="multi_veh_select")
 
     if selected_vehicle_ids:
         st.subheader("Comparison of Vehicle Metrics")
@@ -115,3 +146,8 @@ if fileSelector:
         DrawComparisonChart(df, selected_vehicle_ids, "noise_emissions", "Noise Emission Comparison", "Noise Emission (dB)")
         DrawComparisonChart(df, selected_vehicle_ids, "waiting_time", "Waiting Time Comparison", "Waiting Time (seconds)")
         DrawComparisonChart(df, selected_vehicle_ids, "distance_traveled", "Distance Travelled Comparison", "Distance Travelled (meters)")
+
+else: # Message if no data is loaded at all
+    st.info("Please select a data source and a simulation/file to view.")
+
+

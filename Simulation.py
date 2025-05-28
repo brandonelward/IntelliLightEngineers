@@ -3,6 +3,10 @@ import sys
 import traci
 import pandas as pd
 import streamlit as st
+from database import create_database
+
+# Initialise the database file when this module is loaded
+create_database.initialise_database()
 
 #Launches the SUMO system using user-defined parameters
 def runSimulation(simFile, outFile, stepCount, gui):
@@ -86,7 +90,17 @@ def runSimulation(simFile, outFile, stepCount, gui):
     st.write("Simulation Complete!")
     
     df = pd.DataFrame(data)
-    df.to_csv(outFile, index=False)
+    df.to_csv(outFile, index=False) # Save to CSV
+
+
+    simulation_name_for_db = os.path.splitext(os.path.basename(outFile))[0]
+
+    if not df.empty:
+        st.write(f"Saving simulation data to database table '{simulation_name_for_db}'...")
+        create_database.save_dataframe_to_new_table(df, simulation_name_for_db)
+    else:
+        st.warning("No simulation data was generated or collected to save to the database.")
+
 
     st.session_state.simStatus = "Finished"
 
@@ -95,6 +109,6 @@ def runSimulation(simFile, outFile, stepCount, gui):
 
 #Configures SUMO environment variables
 def configure():
-    sumo_home = "C:\\Program Files (x86)\\Eclipse\\Sumo"
+    sumo_home = "C:\\Users\\brand\\Documents\\SUMO"
     os.environ["SUMO_HOME"] = sumo_home
     return
