@@ -10,7 +10,7 @@ Python module OpenCV - pip install opencv-python
 
 Python module Ultralytics - pip install ultralytics
 
-Pytohn module pyautogui - pip install pyautogui
+Python module pyautogui - pip install pyautogui
 
 ## FAQ:
 
