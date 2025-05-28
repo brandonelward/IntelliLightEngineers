@@ -2,12 +2,12 @@ import streamlit as st
 import os
 import Simulation
 
-fp = os.path.dirname(__file__)
+fp=os.getcwd()
 
 # user inputs
 sumo_upload_entry = st.file_uploader(label="Upload Sumo Files (.sumocfg, .xml)")
 if sumo_upload_entry is not None:
-
+    print ("fp =" +  fp)
     save_path = os.path.join(os.path.join(fp, '../generated'), sumo_upload_entry.name)
     with open(save_path, "wb") as f:
         f.write(sumo_upload_entry.getbuffer())
@@ -15,8 +15,8 @@ if sumo_upload_entry is not None:
     # Display the saved file path
     st.write(f"File saved at: {save_path}")
 
-
-available_configs = os.listdir(os.path.join(fp, '../generated'))
+print("configs = " + os.path.join(os.getcwd(), '\\generated'))
+available_configs = os.listdir()
 available_configs = [sumocnfg for sumocnfg in available_configs if sumocnfg.endswith(".sumocfg")]
 sumo_config_entry = st.selectbox(label="Sumo Config Filename (.sumocfg)", options=available_configs)
 

@@ -109,6 +109,6 @@ def runSimulation(simFile, outFile, stepCount, gui):
 
 #Configures SUMO environment variables
 def configure():
-    sumo_home = "C:\\Users\\brand\\Documents\\SUMO"
+    sumo_home = "C:\\Program Files (x86)\\Eclipse\\SUMO"
     os.environ["SUMO_HOME"] = sumo_home
     return
